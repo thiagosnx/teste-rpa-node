@@ -8,7 +8,7 @@ const xlsx = require("node-xlsx");
 async function getFilmes() {
   const driver = await new Builder()
     .forBrowser("chrome")
-    .setChromeOptions(new chrome.Options().headless(false)) 
+    .setChromeOptions(new chrome.Options()) 
     .build();
 
   try {
@@ -88,7 +88,6 @@ function moveFile(file, folder) {
 
   const destino = path.join(destinoFolder, path.basename(file));
   fs.renameSync(file, destino);
-  console.log(`Arquivo movido para: ${destino}`);
 }
 
 
