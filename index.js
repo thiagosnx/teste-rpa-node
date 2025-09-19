@@ -3,7 +3,7 @@ const { Builder, By, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const fs = require("fs");
 const path = require("path");
-const xlsx = require("node-xlsx");
+// const xlsx = require("node-xlsx");
 
 async function getFilmes() {
   const driver = await new Builder()
@@ -13,7 +13,7 @@ async function getFilmes() {
 
 
   const filePath = path.join(__dirname, "filmes_imdb.csv");
-  const header = ["TITULO", "ANO", "DURACAO", "NOTA", "CLASSIFICACAO", "SINOPSE"].join(";") + "\n";
+  const header =  "\uFEFF" + ["TITULO", "ANO", "DURACAO", "NOTA", "CLASSIFICACAO", "SINOPSE"].join(";") + "\n";
 
   if (!fs.existsSync(path.dirname(filePath))) fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
@@ -38,7 +38,9 @@ async function getFilmes() {
     
     const filmes = await driver.findElements(By.css(".ipc-metadata-list-summary-item"));
 
-    for (let i = 0; i < Math.min(filmes.length, 5); i++) {
+    // Math.min(filmes.length, 5)
+
+    for (let i = 0; i < filmes.length; i++) {
       try {
         const f = filmes[i];
 
@@ -76,7 +78,10 @@ async function getFilmes() {
 
       const fechaSinopseBtn = await driver.findElement(By.css(".ipc-promptable-base__close"));
       await fechaSinopseBtn.click();
+      await driver.sleep(500);
+
       await driver.wait(until.stalenessOf(sinopseElement), 50000);
+      
       } catch (err) {
         console.error(`Erro: ${i}:`, err);
       }
