@@ -23,7 +23,7 @@ async function getFilmes() {
     
     const inicioBtn = await driver.wait(
       until.elementLocated(By.css(".ipc-scroll-to-top-button.sc-3e53ab1c-0.dOykdw.visible.ipc-chip.ipc-chip--on-base")),
-      5000
+      50000
     );
     await inicioBtn.click();
 
@@ -31,25 +31,25 @@ async function getFilmes() {
     const filmes = await driver.findElements(By.css(".ipc-metadata-list-summary-item"));
     const resultados = [];
 
-    for (let i = 0; i < Math.min(filmes.length, 5); i++) {
+    for (let i = 0; i < filmes.length; i++) {
       const f = filmes[i];
 
       
       const sinopseBtn = await f.findElement(By.css(".ipc-icon-button.li-info-icon.ipc-icon-button--base.ipc-icon-button--onAccent2"));
       await driver.actions({ bridge: true }).move({ origin: sinopseBtn }).perform();
-      await driver.wait(until.elementIsVisible(sinopseBtn), 5000);
+      await driver.wait(until.elementIsVisible(sinopseBtn), 50000);
       await sinopseBtn.click();
 
-      const sinopseEl = await driver.wait(
+      const sinopseElement = await driver.wait(
         until.elementLocated(By.css(".sc-717a9add-2.jPYKsd")),
-        5000
+        50000
       );
-      const sinopse = await sinopseEl.getText();
+      const sinopse = await sinopseElement.getText();
 
       
       const fechaSinopseBtn = await driver.findElement(By.css(".ipc-promptable-base__close"));
       await fechaSinopseBtn.click();
-      await driver.wait(until.stalenessOf(sinopseEl), 5000);
+      await driver.wait(until.stalenessOf(sinopseElement), 50000);
 
       
       const titulo = await f.findElement(By.css(".ipc-title__text.ipc-title__text--reduced")).getText();
