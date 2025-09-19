@@ -26,10 +26,15 @@ npm install selenium-webdriver chromedriver node-xlsx
 
 No terminal, dentro da pasta do projeto, execute:
 
+
+```bash
+npm init -y
+```
+E depois 
+
 ```bash
 node index.js
 ```
-
 
 ## Saída
 
